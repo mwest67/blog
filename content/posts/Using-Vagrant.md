@@ -4,6 +4,7 @@ Date: 2016-10-31
 tags: [tools]
 draft: false
 ---
+
 ## Why
 When I started to learn about buffer overflows and memory exploits etc I found
 that lots of the tutorials and material left out the details of environment
@@ -90,3 +91,5 @@ Once your down with the machine just run
 remember destroy really does delete the VM so remember to do all the work you
 want to keep in /vagrant or remember to copy it off of the vm in someway (iethub
 etc) before you do this.
+
+Have fun
