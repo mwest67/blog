@@ -1,6 +1,3 @@
 [submodule "themes/hugo-theme-pure"]
 	path = themes/hugo-theme-pure
 	url = https://github.com/bad-hombres/hugo-theme-pure
-[submodule "public"]
-	path = public
-	url = https://github.com/mwest67/mwest67.github.io
