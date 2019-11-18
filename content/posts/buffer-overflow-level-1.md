@@ -2,6 +2,7 @@
 title: Buffer overflows (Level 1)
 date: 2016-11-03
 draft: false
+tags: [32bit,linux, exploit, bufferoverflow]
 ---
 # What is Smashing the Stack
 You may have heard the term buffer overflow or smashing the stack but what does

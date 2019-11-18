@@ -1,12 +1,13 @@
 baseURL = "/"
 theme = "hugo-theme-pure"
-title = "Pure theme for Hugo"
+title = "Generic title here.."
 languageCode = "en-US"
 defaultContentLanguage = "en"
 footnoteReturnLinkContents = "↩"
 paginate = 7.0
 enableEmoji = true
 googleAnalytics = ""
+pygmentsCodeFences = true
 
 [permalinks]
 posts = "/:year/:month/:filename/"
@@ -149,6 +150,7 @@ widgets = [
   min2read = true
 
   [params.config]
+  skin = "theme-black"
   layout = "main-center"
   excerpt_link = "Read More"
   toc = true

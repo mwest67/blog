@@ -1,6 +1,7 @@
 ---
 title: Using Vagrant
 Date: 2016-10-31
+tags: [tools]
 draft: false
 ---
 ## Why

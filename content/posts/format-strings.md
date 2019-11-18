@@ -2,6 +2,7 @@
 title: Format Strings
 date: 2016-11-01
 draft: false
+tags: [linux,exploit,32bit]
 ---
 # Background
 Any of us who have been around a while will most likely will have done some C
