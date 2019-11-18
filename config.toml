@@ -1,6 +1,6 @@
-baseURL = "/"
+baseURL = "https://mwest67.github.io/"
 theme = "hugo-theme-pure"
-title = "Generic title here.."
+title = "General Infosec Ramblings"
 languageCode = "en-US"
 defaultContentLanguage = "en"
 footnoteReturnLinkContents = "↩"
