@@ -92,4 +92,3 @@ remember destroy really does delete the VM so remember to do all the work you
 want to keep in /vagrant or remember to copy it off of the vm in someway (iethub
 etc) before you do this.
 
-Have fun
