@@ -5,6 +5,7 @@ draft: false
 tags: [32bit,linux,assembly,shellcode,slae]
 langs: [c,x86asm]
 ---
+
 # SLAE
 The SecurityTube Linux Assembly Expert is a course and certification from the
 folks over at http://www.securitytube-training.com and also available on
