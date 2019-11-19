@@ -3,6 +3,7 @@ title: Crafting Shellcode
 date: 2016-11-02
 draft: false
 tags: [linux,shellcode,assembly,32bit]
+langs: [x86asm, c]
 ---
 
 # Intro
