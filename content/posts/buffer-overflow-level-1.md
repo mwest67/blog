@@ -3,7 +3,9 @@ title: Buffer overflows (Level 1)
 date: 2016-11-03
 draft: false
 tags: [32bit,linux, exploit, bufferoverflow]
+langs: [x86asm,c]
 ---
+
 # What is Smashing the Stack
 You may have heard the term buffer overflow or smashing the stack but what does
 this mean? Simply this just means that a program hasnt checked its inputs and
@@ -375,4 +377,4 @@ Nice!! we ended up with a shell (those running bash will have seen their prompt
 change
 
 Level 1 complete! Next up what happens when we cant execute code from the
-stack!!!!
+stack!!!! Winning!
