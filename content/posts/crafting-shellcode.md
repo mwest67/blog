@@ -107,7 +107,7 @@ this out linux doesnt care about the extra /)
 We have to put the string on in reverse order so we start with the null
 terminator
 
-{{< highlight nasm >}}
+{{< highlight x86asm >}}
   xor eax, eax  ; zero out eax
   push eax      ; push the 0x0 on the stack
 {{< / highlight >}}
@@ -120,7 +120,7 @@ string. We'll use python to get the hex value for this
 ```
 So we split this in half and then push it onto the stack
 
-{{< highlight nasm >}}
+{{< highlight x86asm >}}
   push 0x68732f6e   ; push the first half to the stack
   push 0x69622f2f   ; push the second half of the stack
   mov ebx, esp      ; move the address of the stack pointer to ebx (1st
@@ -141,7 +141,7 @@ EDX        EBX
 ```
 So now if we point ECX to the address of the //bin/sh string we have our array
 
-{{< highlight nasm >}}
+{{< highlight x86asm >}}
   push eax      ; push 0x0 on the stack
   mov  edx, esp ; move the address of 0x0 to the 3rd param
   push ebx      ; push the address of //bin/sh on the stack
@@ -151,7 +151,7 @@ So now if we point ECX to the address of the //bin/sh string we have our array
 
 All that is left to do is to make the call
 
-{{< highlight nasm >}}
+{{< highlight x86asm >}}
   mov al, 11  ; move 11 into EAX (execve call is number 11)
   int 0x80    ; trigger the call
 {{< / highlight >}}
@@ -162,7 +162,7 @@ version of 11 in hex is 0x0000000b and the 8 bit version is 0x0b.
 
 With that all done here is the final assembly
 
-{{< highlight nasm >}}
+{{< highlight x86asm >}}
 
 global _start
 section .text
